@@ -10,8 +10,18 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-    new Task()
-    console.log(new Task);
+    const task = new Task(req.body);
+    await Task.save();
+    res.json({
+        status: 'Task saved'
+    });
 });
+
+router.put('/:id', async (req, res) => {
+    await Task.findByIdAndUpdate(req.params, req.body);
+    res.json({
+        status: 'Task updated'
+    });
+})
 
 module.exports = router;
